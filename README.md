@@ -4,7 +4,7 @@ Recova conecta a generadores de materiales secundarios con empresas que pueden a
 
 ## Vista interactiva
 
-[Abrir Recova en el navegador](https://adhexxx.github.io/recova-mvp/). Esta versión muestra la selección de rol, la publicación, la agrupación de lotes por EVA y la confirmación con un caso simulado.
+[Abrir Recova en el navegador](https://adhexxx.github.io/recova-mvp/). La edición de GitHub Pages usa las mismas pantallas y datos de ejemplo que la app local. Permite publicar, explorar coincidencias y agrupaciones, y gestionar operaciones dentro del navegador. El chat requiere el servidor de Recova.
 
 ## Ejecutar en local
 

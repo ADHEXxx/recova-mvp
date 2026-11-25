@@ -21,6 +21,7 @@
 /__pycache__/
 
 # Borradores locales de la presentación
+/docs/index.html
 /app/demo/
 /features/pitch/
 

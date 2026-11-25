@@ -12,6 +12,7 @@ import { Role } from "@/types";
 const QUESTIONS_GENERATOR = ["¿Por qué este match tiene alta compatibilidad?", "¿Me conviene agrupar mi lote?", "¿Cómo puedo aumentar su valor?", "¿Qué empresas podrían usar este material?"];
 const QUESTIONS_BUYER = ["¿Por qué este match tiene alta compatibilidad?", "¿Me conviene esperar por más volumen?", "¿Qué generador tiene mejor reputación?", "¿Cómo reduzco mi radio de búsqueda sin perder opciones?"];
 type ChatItem = { role: "user" | "assistant"; content: string };
+const staticSite = process.env.NEXT_PUBLIC_RECOVA_STATIC === "true";
 
 export function AskEvaPanel({ role }: { role: Role }) {
   const company = useCurrentCompany();
@@ -66,6 +67,12 @@ export function AskEvaPanel({ role }: { role: Role }) {
       </Button>
 
       <ResponsiveDialog open={open} onOpenChange={setOpen} title="Preguntar a EVA" description="Orientación inteligente basada en tus datos de Recova.">
+        {staticSite ? (
+          <div className="flex items-start gap-3 rounded-xl bg-secondary p-4">
+            <EvaAvatar size="sm" />
+            <p className="text-sm leading-6 text-secondary-foreground">El chat requiere el servidor de Recova. En esta versión podés revisar las coincidencias y las agrupaciones calculadas por EVA.</p>
+          </div>
+        ) : <>
         <div aria-live="polite" className="max-h-[48vh] space-y-3 overflow-y-auto pr-1">
           {thread.length === 0 && (
             <div className="flex items-start gap-3 rounded-xl bg-secondary p-4">
@@ -94,6 +101,7 @@ export function AskEvaPanel({ role }: { role: Role }) {
           <Button type="submit" size="icon" disabled={loading || !draft.trim()} aria-label="Enviar pregunta">{loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}</Button>
         </form>
         <p className="mt-2 text-xs text-muted-foreground">EVA puede equivocarse. Verificá datos críticos antes de cerrar una operación.</p>
+        </>}
       </ResponsiveDialog>
     </>
   );
