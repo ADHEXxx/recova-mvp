@@ -7,6 +7,8 @@ export const CITY_COORDS: Record<City, { lat: number; lng: number }> = {
   "El Alto": { lat: -16.5104, lng: -68.1633 },
   Warnes: { lat: -17.5136, lng: -63.1633 },
   Montero: { lat: -17.3394, lng: -63.2528 },
+  Viacha: { lat: -16.654, lng: -68.297 },
+  Sucre: { lat: -19.043, lng: -65.259 },
 };
 
 export function jitterCoords(lat: number, lng: number) {

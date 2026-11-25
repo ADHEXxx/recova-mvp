@@ -9,6 +9,9 @@ const industrialLots = [
   { id: "mat-cbn-aluminio", companyId: "gen-cbn", name: "Latas de aluminio compactadas", materialType: "Aluminio", quantity: 210 },
   { id: "mat-pil-carton", companyId: "gen-pil", name: "Cajas de cartón corrugado", materialType: "Cartón corrugado", quantity: 850 },
   { id: "mat-venado-film", companyId: "gen-venado", name: "Film stretch de paletizado", materialType: "Film stretch", quantity: 160 },
+  { id: "mat-madepa-pp", companyId: "gen-madepa", name: "Recortes de polipropileno", materialType: "PP", quantity: 480 },
+  { id: "mat-soboce-madera", companyId: "gen-soboce", name: "Madera de embalajes industriales", materialType: "Madera", quantity: 260 },
+  { id: "mat-fancesa-carton", companyId: "gen-fancesa", name: "Cartón de embalaje seco", materialType: "Cartón corrugado", quantity: 340 },
 ] satisfies Array<Pick<Material, "id" | "companyId" | "name" | "materialType" | "quantity">>;
 
 export const materials: Material[] = [

@@ -6,6 +6,7 @@ import { EvaAvatar } from "@/components/shared/eva-avatar";
 import { MatchCard } from "@/components/shared/match-card";
 import { MetricCard } from "@/components/shared/metric-card";
 import { Button } from "@/components/ui/button";
+import { featuredCompanyIds } from "@/data/companies";
 import { useCurrentCompany, useStore } from "@/lib/store";
 import { getMatchesForCompany } from "@/services/matches";
 
@@ -18,6 +19,7 @@ export default function DashboardPage() {
   const listings = isGenerator ? state.materials : state.requirements;
   const active = listings.filter((item) => item.companyId === company.id && item.status === "active").length;
   const opportunities = getMatchesForCompany(state, company).filter(({ status }) => !["cancelled", "completed"].includes(status));
+  const featuredCompanies = state.companies.filter((item) => featuredCompanyIds.has(item.id));
 
   return (
     <div className="space-y-6">
@@ -38,6 +40,17 @@ export default function DashboardPage() {
       <Button asChild className="w-full rounded-xl sm:w-auto">
         <Link href={isGenerator ? "/materials/new" : "/requirements/new"}><Plus />{isGenerator ? "Publicar material" : "Publicar necesidad"}</Link>
       </Button>
+
+      <section aria-labelledby="example-companies" className="rounded-xl border border-border bg-card p-4">
+        <h2 id="example-companies" className="font-semibold">Empresas del ejemplo</h2>
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {featuredCompanies.map((item) => (
+            <li key={item.id} className="rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">
+              {item.name}
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section aria-labelledby="opportunities" className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">

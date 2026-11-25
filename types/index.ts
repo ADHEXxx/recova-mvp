@@ -27,6 +27,8 @@ export const CITIES = [
   "El Alto",
   "Warnes",
   "Montero",
+  "Viacha",
+  "Sucre",
 ] as const;
 export type City = (typeof CITIES)[number];
 

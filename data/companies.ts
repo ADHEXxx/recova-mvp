@@ -16,13 +16,19 @@ const industrialGenerators = [
   { id: "gen-cbn", name: "Cervecería Boliviana Nacional (CBN)", activity: "Elaboración de cerveza y otras bebidas", city: "Santa Cruz de la Sierra", lat: -17.85, lng: -63.23, logoInitials: "CB", color: "#735322" },
   { id: "gen-pil", name: "PIL Andina S.A.", activity: "Elaboración de productos lácteos", city: "Cochabamba", lat: -17.39, lng: -66.16, logoInitials: "PI", color: "#24597a" },
   { id: "gen-venado", name: "Industrias Venado S.A.", activity: "Fabricación de alimentos y productos de consumo", city: "La Paz", lat: -16.5, lng: -68.15, logoInitials: "VE", color: "#4b5b31" },
-] satisfies Array<Pick<Company, "id" | "name" | "city" | "lat" | "lng" | "logoInitials"> & { activity: string; color: string }>;
+  { id: "gen-madepa", name: "MADEPA S.A.", sector: "Plásticos y empaques", activity: "Fabricación de productos plásticos y escolares", city: "Santa Cruz de la Sierra", lat: -17.77, lng: -63.16, logoInitials: "MD", color: "#24536d" },
+  { id: "gen-soboce", name: "SOBOCE S.A.", sector: "Construcción", activity: "Producción de cemento y materiales para construcción", city: "Viacha", lat: -16.654, lng: -68.297, logoInitials: "SO", color: "#38526a" },
+  { id: "gen-fancesa", name: "FANCESA", sector: "Construcción", activity: "Fabricación de cemento en Sucre", city: "Sucre", lat: -19.043, lng: -65.259, logoInitials: "FA", color: "#795344" },
+] satisfies Array<Pick<Company, "id" | "name" | "city" | "lat" | "lng" | "logoInitials"> &
+  Partial<Pick<Company, "sector">> & { activity: string; color: string }>;
+
+export const featuredCompanyIds: ReadonlySet<string> = new Set(industrialGenerators.map(({ id }) => id));
 
 export const companies: Company[] = [
   ...industrialGenerators.map(({ activity, color, ...company }): Company => ({
+    sector: "Alimentos y bebidas",
     ...company,
     role: "GENERATOR",
-    sector: "Alimentos y bebidas",
     accountType: "COMPANY",
     address: "",
     phone: "",
