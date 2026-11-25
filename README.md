@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+﻿# Recova MVP
 
-## Getting Started
+Recova conecta a generadores de materiales secundarios con empresas que pueden aprovecharlos. El MVP usa datos de ejemplo de Santa Cruz, Bolivia.
 
-First, run the development server:
+## Ejecutar en local
+
+Con Node.js y npm instalados, ejecutá:
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrí http://localhost:3000. Para probar desde un celular conectado al mismo Wi-Fi, escaneá el QR que se imprime en la terminal.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Probar el MVP
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Elegí **Generador** o **Comprador** en la pantalla de entrada. Podés cambiar de rol desde el encabezado, sin ingresar credenciales.
 
-## Learn More
+- **Inicio:** consultá el panel y publicá una oferta o una necesidad.
+- **Materiales:** explorá el mercado y consultá tus publicaciones.
+- **EVA:** revisá coincidencias, agrupaciones y recomendaciones, o abrí el chat.
+- **Operaciones:** confirmá coincidencias y revisá los acuerdos y el historial.
 
-To learn more about Next.js, take a look at the following resources:
+Los cambios se guardan en el navegador. Para ver la misma operación desde ambos roles, alterná entre ellos en el mismo navegador.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Configurar el chat de EVA
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Copiá `.env.example` como `.env.local`, completá `OPENAI_API_KEY` y reiniciá el servidor. El chat usa OpenAI desde el servidor. Las coincidencias y propuestas de agrupación funcionan con las reglas de Recova.
 
-## Deploy on Vercel
+## Verificar la compilación
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```

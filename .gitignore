@@ -16,6 +16,14 @@
 # next.js
 /.next/
 /out/
+/output/
+/tmp/
+/__pycache__/
+
+# Borradores locales de la presentación
+/docs/index.html
+/app/demo/
+/features/pitch/
 
 # production
 /build
@@ -32,6 +40,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
