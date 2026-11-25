@@ -24,9 +24,7 @@ Elegí **Generador** o **Comprador** en la pantalla de entrada. Podés cambiar d
 
 Los cambios se guardan en el navegador. Para ver la misma operación desde ambos roles, alterná entre ellos en el mismo navegador.
 
-## Configurar el chat de EVA
-
-Copiá `.env.example` como `.env.local`, completá `OPENAI_API_KEY` y reiniciá el servidor. El chat usa OpenAI desde el servidor. Las coincidencias y propuestas de agrupación funcionan con las reglas de Recova.
+El chat de EVA está integrado con OpenAI y requiere una instancia configurada. Las coincidencias y las propuestas de agrupación funcionan localmente con las reglas de Recova.
 
 ## Verificar la compilación
 
