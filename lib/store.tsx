@@ -61,10 +61,16 @@ type Action =
   | { type: "ENSURE_CONVERSATION"; conversation: Conversation }
   | { type: "UPDATE_COMPANY"; id: string; patch: Partial<Company> };
 
+function addMissingSeeds<T extends { id: string }>(saved: T[] | undefined, seeds: T[]) {
+  if (!saved) return seeds;
+  const existing = new Set(saved.map((item) => item.id));
+  return [...saved, ...seeds.filter((item) => !existing.has(item.id))];
+}
+
 function reducer(state: StoreState, action: Action): StoreState {
   switch (action.type) {
     case "HYDRATE": {
-      const hydratedCompanies = (action.payload.companies ?? state.companies).map((company) => {
+      const hydratedCompanies = addMissingSeeds(action.payload.companies, state.companies).map((company) => {
         const seed = getCompanyById(company.id);
         const name = company.name.trim().toLocaleLowerCase("es");
         if (seed && company.id === "gen-envaplast" && name === "envaplast srl") {
@@ -95,7 +101,14 @@ function reducer(state: StoreState, action: Action): StoreState {
           ? { ...notification, body: notification.body.replace("Envaplast SRL", "Matriplast") }
           : notification,
       );
-      return { ...state, ...action.payload, companies: hydratedCompanies, notifications, hydrated: true };
+      return {
+        ...state,
+        ...action.payload,
+        companies: hydratedCompanies,
+        materials: addMissingSeeds(action.payload.materials, state.materials),
+        notifications,
+        hydrated: true,
+      };
     }
     case "LOGIN":
       return { ...state, currentCompanyId: action.companyId };

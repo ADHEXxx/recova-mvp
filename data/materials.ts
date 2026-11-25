@@ -1,6 +1,32 @@
 import { Material } from "@/types";
+import { categoryForMaterialType } from "@/lib/material-category";
+import { getCompanyById } from "./companies";
+
+const industrialLots = [
+  { id: "mat-embol-pet", companyId: "gen-embol", name: "Recortes de PET transparente", materialType: "PET", quantity: 420 },
+  { id: "mat-embol-hdpe", companyId: "gen-embol", name: "HDPE separado de embalajes", materialType: "HDPE", quantity: 550 },
+  { id: "mat-cbn-carton", companyId: "gen-cbn", name: "Cartón corrugado de embalaje", materialType: "Cartón corrugado", quantity: 380 },
+  { id: "mat-cbn-aluminio", companyId: "gen-cbn", name: "Latas de aluminio compactadas", materialType: "Aluminio", quantity: 210 },
+  { id: "mat-pil-carton", companyId: "gen-pil", name: "Cajas de cartón corrugado", materialType: "Cartón corrugado", quantity: 850 },
+  { id: "mat-venado-film", companyId: "gen-venado", name: "Film stretch de paletizado", materialType: "Film stretch", quantity: 160 },
+] satisfies Array<Pick<Material, "id" | "companyId" | "name" | "materialType" | "quantity">>;
 
 export const materials: Material[] = [
+  ...industrialLots.map((lot): Material => ({
+    ...lot,
+    category: categoryForMaterialType(lot.materialType),
+    description: "Lote simulado para evaluar el mercado y las coincidencias de EVA.",
+    unit: "kg",
+    condition: "Usado - reciclable",
+    cleanliness: "Limpio",
+    city: getCompanyById(lot.companyId)!.city,
+    availability: "Inmediata",
+    frequency: "Semanal",
+    photos: [{ id: lot.id, color: "#e7f3ec" }],
+    acceptsGrouping: true,
+    status: "active",
+    createdAt: daysAgo(1),
+  })),
   {
     id: "mat-hdpe-envaplast",
     companyId: "gen-envaplast",

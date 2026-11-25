@@ -11,7 +11,34 @@ import { generateLogoDataUri } from "@/lib/logo-mark";
 
 const DEMO_PASSWORD = "RecovaDemo2026!";
 
+const industrialGenerators = [
+  { id: "gen-embol", name: "EMBOL S.A.", activity: "Embotellado de bebidas", city: "Santa Cruz de la Sierra", lat: -17.78, lng: -63.15, logoInitials: "EM", color: "#8b3439" },
+  { id: "gen-cbn", name: "Cervecería Boliviana Nacional (CBN)", activity: "Elaboración de cerveza y otras bebidas", city: "Santa Cruz de la Sierra", lat: -17.85, lng: -63.23, logoInitials: "CB", color: "#735322" },
+  { id: "gen-pil", name: "PIL Andina S.A.", activity: "Elaboración de productos lácteos", city: "Cochabamba", lat: -17.39, lng: -66.16, logoInitials: "PI", color: "#24597a" },
+  { id: "gen-venado", name: "Industrias Venado S.A.", activity: "Fabricación de alimentos y productos de consumo", city: "La Paz", lat: -16.5, lng: -68.15, logoInitials: "VE", color: "#4b5b31" },
+] satisfies Array<Pick<Company, "id" | "name" | "city" | "lat" | "lng" | "logoInitials"> & { activity: string; color: string }>;
+
 export const companies: Company[] = [
+  ...industrialGenerators.map(({ activity, color, ...company }): Company => ({
+    ...company,
+    role: "GENERATOR",
+    sector: "Alimentos y bebidas",
+    accountType: "COMPANY",
+    address: "",
+    phone: "",
+    contactName: "Contacto de ejemplo",
+    memberSince: "2026-11-25",
+    verified: false,
+    rating: 0,
+    complianceRate: 0,
+    qualityComplianceRate: 0,
+    punctualityRate: 0,
+    operationsCount: 0,
+    hasTransport: false,
+    acceptsGrouping: true,
+    bio: `${activity}. Las publicaciones y operaciones asociadas a este perfil de Recova son simuladas.`,
+    contactPhotoUrl: generateLogoDataUri(company.logoInitials, color),
+  })),
   // Generadores
   {
     id: "gen-envaplast",
