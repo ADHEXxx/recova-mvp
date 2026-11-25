@@ -15,23 +15,12 @@ import { categoryForMaterialType } from "@/lib/material-category";
 import { useCurrentCompany, useStore, useStoreActions } from "@/lib/store";
 import { ClipboardCheck, QrCode, Sparkles } from "lucide-react";
 import { Material } from "@/types";
+import { MATERIAL_QR_SAMPLE } from "@/data/sample-qr";
 
 const CONDITIONS = ["Nuevo excedente", "Usado - buen estado", "Usado - reciclable", "Procesado"] as const;
 const CLEANLINESS = ["Muy limpio", "Limpio", "Regular", "Con impurezas"] as const;
 const AVAILABILITY = ["Inmediata", "En 3-7 días", "En 1-2 semanas"] as const;
 const FREQUENCIES = ["Única vez", "Semanal", "Quincenal", "Mensual", "Continua"] as const;
-
-const QR_SAMPLE = {
-  code: "REC-0248",
-  name: "Chatarra ferrosa · REC-0248",
-  description: "Contenedor REC-0248 con recortes de acero secos para recuperación.",
-  materialType: "Chatarra ferrosa",
-  quantity: "120",
-  condition: "Usado - reciclable",
-  cleanliness: "Limpio",
-  availability: "Inmediata",
-  frequency: "Única vez",
-} as const;
 
 export function MaterialForm({ requirementId, simulateQr }: { requirementId?: string; simulateQr?: boolean }) {
   const router = useRouter();
@@ -41,7 +30,7 @@ export function MaterialForm({ requirementId, simulateQr }: { requirementId?: st
   const linkedRequirement = requirementId ? state.requirements.find((requirement) => requirement.id === requirementId) : undefined;
   const didPrefill = useRef(false);
 
-  const sample = simulateQr && !requirementId && company?.role === "GENERATOR" ? QR_SAMPLE : undefined;
+  const sample = simulateQr && !requirementId && company?.role === "GENERATOR" ? MATERIAL_QR_SAMPLE : undefined;
   const [description, setDescription] = useState<string>(sample?.description ?? "");
   const [name, setName] = useState<string>(sample?.name ?? "");
   const [category, setCategory] = useState<MaterialCategory | "">(sample ? categoryForMaterialType(sample.materialType) : "");

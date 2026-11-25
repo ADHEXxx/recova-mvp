@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ClipboardList, Handshake, Package, Plus, Sparkles } from "lucide-react";
 import { EvaAvatar } from "@/components/shared/eva-avatar";
+import { CompanyAvatar } from "@/components/shared/company-avatar";
 import { MatchCard } from "@/components/shared/match-card";
 import { MetricCard } from "@/components/shared/metric-card";
 import { Button } from "@/components/ui/button";
@@ -43,10 +44,14 @@ export default function DashboardPage() {
 
       <section aria-labelledby="example-companies" className="rounded-xl border border-border bg-card p-4">
         <h2 id="example-companies" className="font-semibold">Empresas del ejemplo</h2>
-        <ul className="mt-3 flex flex-wrap gap-2">
+        <ul className="mt-3 grid gap-2 min-[360px]:grid-cols-2 lg:grid-cols-3">
           {featuredCompanies.map((item) => (
-            <li key={item.id} className="rounded-lg bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground">
-              {item.name}
+            <li key={item.id} className="flex min-w-0 items-center gap-3 rounded-xl bg-secondary px-3 py-2 text-secondary-foreground">
+              <CompanyAvatar initials={item.logoInitials} size="sm" tone="secondary" className="shrink-0" />
+              <div className="min-w-0">
+                <p className="text-sm font-semibold">{item.name}</p>
+                <p className="text-xs text-muted-foreground">{item.city} · {item.role === "GENERATOR" ? "Generador" : "Comprador"}</p>
+              </div>
             </li>
           ))}
         </ul>

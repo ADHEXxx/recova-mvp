@@ -22,7 +22,12 @@ const industrialGenerators = [
 ] satisfies Array<Pick<Company, "id" | "name" | "city" | "lat" | "lng" | "logoInitials"> &
   Partial<Pick<Company, "sector">> & { activity: string; color: string }>;
 
-export const featuredCompanyIds: ReadonlySet<string> = new Set(industrialGenerators.map(({ id }) => id));
+export const featuredCompanyIds: ReadonlySet<string> = new Set([
+  ...industrialGenerators.map(({ id }) => id),
+  "gen-envaplast",
+  "buy-replast",
+  "buy-cartopack",
+]);
 
 export const companies: Company[] = [
   ...industrialGenerators.map(({ activity, color, ...company }): Company => ({

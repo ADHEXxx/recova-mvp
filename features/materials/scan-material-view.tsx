@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MATERIAL_QR_SAMPLE } from "@/data/sample-qr";
 import { MVP_ACCOUNTS } from "@/lib/mvp-accounts";
 import { useCurrentCompany, useStoreActions } from "@/lib/store";
 import sampleQr from "@/public/brand/recova-lote-qr.png";
@@ -40,12 +41,15 @@ export function ScanMaterialView() {
       </header>
       <div className="grid justify-items-center gap-4 rounded-2xl bg-[#14362b] px-4 py-6 text-white">
         <div className="relative overflow-hidden rounded-xl border-2 border-emerald-300/60 bg-white p-2">
-          <Image src={sampleQr} alt="Código QR de ejemplo del contenedor REC-0248" width={144} height={144} priority />
+          <Image src={sampleQr} alt={`Código QR de ejemplo del contenedor ${MATERIAL_QR_SAMPLE.code}`} width={144} height={144} priority />
           {scanning && (
             <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-1/2 h-0.5 bg-emerald-500 shadow-[0_0_12px_3px_#34d399] motion-safe:animate-[material-qr-sweep_1s_ease-in-out_both]" />
           )}
         </div>
-        <p role="status" className="text-sm font-medium">{scanning ? "Leyendo el QR…" : "Contenedor de ejemplo · REC-0248"}</p>
+        <div className="space-y-1 text-center">
+          <p role="status" className="text-sm font-medium">{scanning ? "Leyendo el QR…" : `Contenedor de ejemplo · ${MATERIAL_QR_SAMPLE.code}`}</p>
+          <p className="text-sm text-white/85">{MATERIAL_QR_SAMPLE.source} · Botellas PET transparentes</p>
+        </div>
       </div>
       <Button type="button" size="lg" className="h-auto min-h-12 w-full whitespace-normal" disabled={scanning} onClick={startScan}>
         <ScanLine aria-hidden="true" /> {scanning ? "Escaneando…" : isBuyer ? "Cambiar a Generador y escanear" : "Simular escaneo de QR"}
