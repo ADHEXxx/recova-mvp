@@ -4,15 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MATERIAL_QR_SCAN_PATH, mobileNavItems } from "@/lib/nav";
 import { cn } from "@/lib/utils";
-import type { Role } from "@/types";
 
-export function MobileBottomNav({ role }: { role: Role }) {
+export function MobileBottomNav() {
   const pathname = usePathname();
-  const items = mobileNavItems(role);
+  const items = mobileNavItems();
 
   return (
     <nav aria-label="Navegación principal" className="safe-bottom sticky bottom-0 z-30 border-t border-border bg-card/95 backdrop-blur-xl sm:rounded-b-3xl">
-      <div className={cn("grid min-h-16", role === "GENERATOR" ? "grid-cols-5" : "grid-cols-4")}>
+      <div className="grid min-h-16 grid-cols-5">
         {items.map((item) => {
           const scan = item.href === MATERIAL_QR_SCAN_PATH;
           const active = pathname === item.href || pathname.startsWith(item.href + "/")

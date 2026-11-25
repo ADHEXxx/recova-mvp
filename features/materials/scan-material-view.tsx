@@ -1,18 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCurrentCompany } from "@/lib/store";
+import { MVP_ACCOUNTS } from "@/lib/mvp-accounts";
+import { useCurrentCompany, useStoreActions } from "@/lib/store";
 import sampleQr from "@/public/brand/recova-lote-qr.png";
 
 export function ScanMaterialView() {
   const company = useCurrentCompany();
+  const { login } = useStoreActions();
   const router = useRouter();
   const [scanning, setScanning] = useState(false);
+  const isBuyer = company?.role === "BUYER";
 
   useEffect(() => {
     if (!scanning || company?.role !== "GENERATOR") return;
@@ -20,21 +22,21 @@ export function ScanMaterialView() {
     return () => window.clearTimeout(timer);
   }, [company?.role, router, scanning]);
 
-  if (company?.role !== "GENERATOR") {
-    return (
-      <section className="mx-auto max-w-md space-y-4">
-        <h1 className="text-2xl font-bold">Escanear QR del lote</h1>
-        <p className="text-sm text-muted-foreground">Cambiá a Generador para cargar un lote desde un QR.</p>
-        <Button asChild variant="outline"><Link href="/marketplace">Volver a Materiales</Link></Button>
-      </section>
-    );
+  function startScan() {
+    if (!company || scanning) return;
+    if (isBuyer) login(MVP_ACCOUNTS.GENERATOR);
+    setScanning(true);
   }
 
   return (
     <section className="mx-auto max-w-md space-y-5">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Escanear QR del lote</h1>
-        <p className="text-sm text-muted-foreground">Simulá la lectura de una etiqueta para cargar los datos del contenedor.</p>
+        <p className="text-sm text-muted-foreground">
+          {isBuyer
+            ? "Para probar la carga de un lote, cambiá al rol Generador e iniciá el escaneo."
+            : "Simulá la lectura de una etiqueta para cargar los datos del contenedor."}
+        </p>
       </header>
       <div className="grid justify-items-center gap-4 rounded-2xl bg-[#14362b] px-4 py-6 text-white">
         <div className="relative overflow-hidden rounded-xl border-2 border-emerald-300/60 bg-white p-2">
@@ -45,8 +47,8 @@ export function ScanMaterialView() {
         </div>
         <p role="status" className="text-sm font-medium">{scanning ? "Leyendo el QR…" : "Contenedor de ejemplo · REC-0248"}</p>
       </div>
-      <Button type="button" size="lg" className="w-full" disabled={scanning} onClick={() => setScanning(true)}>
-        <ScanLine aria-hidden="true" /> {scanning ? "Escaneando…" : "Simular escaneo de QR"}
+      <Button type="button" size="lg" className="h-auto min-h-12 w-full whitespace-normal" disabled={scanning} onClick={startScan}>
+        <ScanLine aria-hidden="true" /> {scanning ? "Escaneando…" : isBuyer ? "Cambiar a Generador y escanear" : "Simular escaneo de QR"}
       </Button>
     </section>
   );
