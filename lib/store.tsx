@@ -66,15 +66,36 @@ function reducer(state: StoreState, action: Action): StoreState {
     case "HYDRATE": {
       const hydratedCompanies = (action.payload.companies ?? state.companies).map((company) => {
         const seed = getCompanyById(company.id);
+        const name = company.name.trim().toLocaleLowerCase("es");
+        if (seed && company.id === "gen-envaplast" && name === "envaplast srl") {
+          return {
+            ...company,
+            authEmail: company.authEmail ?? seed.authEmail,
+            authPassword: company.authPassword ?? seed.authPassword,
+            name: seed.name,
+            logoInitials: seed.logoInitials,
+            contactPhotoUrl: seed.contactPhotoUrl,
+            bio: seed.bio,
+            verified: seed.verified,
+            address: company.address === "Parque Industrial, Manzana 12" ? seed.address : company.address,
+            phone: company.phone === "+591 700 11 222" ? seed.phone : company.phone,
+            contactName: company.contactName === "Marcelo Rojas" ? seed.contactName : company.contactName,
+          };
+        }
         return {
           ...company,
           authEmail: company.authEmail ?? seed?.authEmail,
           authPassword: company.authPassword ?? seed?.authPassword,
-          name: company.name.trim().toLocaleLowerCase("es") === "fudnares" ? "Fundares" : company.name,
+          name: name === "fudnares" ? "Fundares" : company.name,
           accountType: company.role === "BUYER" ? "COMPANY" as const : company.accountType,
         };
       });
-      return { ...state, ...action.payload, companies: hydratedCompanies, hydrated: true };
+      const notifications = (action.payload.notifications ?? state.notifications).map((notification) =>
+        notification.body.includes("Envaplast SRL")
+          ? { ...notification, body: notification.body.replace("Envaplast SRL", "Matriplast") }
+          : notification,
+      );
+      return { ...state, ...action.payload, companies: hydratedCompanies, notifications, hydrated: true };
     }
     case "LOGIN":
       return { ...state, currentCompanyId: action.companyId };

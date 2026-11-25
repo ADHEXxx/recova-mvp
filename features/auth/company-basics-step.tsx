@@ -55,7 +55,7 @@ export function CompanyBasicsStep({ role, value, onChange }: { role: Role | null
       {value.accountType && (
         <div className="space-y-5">
           <Field label={isIndividual ? "Tu nombre" : isBuyer ? "Razón social o nombre comercial" : "Nombre de la organización"} htmlFor="profile-name">
-            <Input id="profile-name" value={value.name} onChange={(e) => onChange({ name: e.target.value })} placeholder={isIndividual ? "Ej. Carlos Mendoza" : "Ej. Envaplast SRL"} autoComplete={isIndividual ? "name" : "organization"} />
+            <Input id="profile-name" value={value.name} onChange={(e) => onChange({ name: e.target.value })} placeholder={isIndividual ? "Ej. Carlos Mendoza" : "Ej. Matriplast"} autoComplete={isIndividual ? "name" : "organization"} />
           </Field>
 
           {isCompany && !isBuyer && (
