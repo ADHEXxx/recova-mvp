@@ -1,4 +1,4 @@
 export const MVP_ACCOUNTS = {
-  GENERATOR: "gen-envaplast",
+  GENERATOR: "gen-embol",
   BUYER: "buy-replast",
 } as const;
