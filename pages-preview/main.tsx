@@ -7,6 +7,7 @@ import RegisterPage from "@/app/register/page";
 import DashboardPage from "@/app/(app)/dashboard/page";
 import MarketplacePage from "@/app/(app)/marketplace/page";
 import MaterialsPage from "@/app/(app)/materials/page";
+import ScanMaterialPage from "@/app/(app)/materials/escanear/page";
 import RequirementsPage from "@/app/(app)/requirements/page";
 import NewRequirementPage from "@/app/(app)/requirements/new/page";
 import MatchesPage from "@/app/(app)/matches/page";
@@ -33,6 +34,7 @@ const staticPages: Partial<Record<string, ComponentType>> = {
   "/dashboard": DashboardPage,
   "/marketplace": MarketplacePage,
   "/materials": MaterialsPage,
+  "/materials/escanear": ScanMaterialPage,
   "/requirements": RequirementsPage,
   "/requirements/new": NewRequirementPage,
   "/matches": MatchesPage,

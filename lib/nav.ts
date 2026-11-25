@@ -3,6 +3,7 @@ import {
   Store,
   Handshake,
   Package,
+  QrCode,
   ClipboardList,
   Sparkles,
   History,
@@ -18,10 +19,13 @@ export interface NavItem {
   icon: LucideIcon;
 }
 
-export function mobileNavItems(): NavItem[] {
+export const MATERIAL_QR_SCAN_PATH = "/materials/escanear";
+
+export function mobileNavItems(role: Role): NavItem[] {
   return [
     { label: "Inicio", href: "/dashboard", icon: Home },
     { label: "Materiales", href: "/marketplace", icon: Package },
+    ...(role === "GENERATOR" ? [{ label: "Escanear QR", href: MATERIAL_QR_SCAN_PATH, icon: QrCode }] : []),
     { label: "EVA", href: "/eva", icon: Sparkles },
     { label: "Operaciones", href: "/history", icon: History },
   ];

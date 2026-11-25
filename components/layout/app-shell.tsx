@@ -31,7 +31,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="relative mx-auto flex min-h-svh max-w-4xl flex-col bg-background sm:min-h-[calc(100svh-3rem)] sm:rounded-3xl sm:border sm:border-border sm:shadow-xl">
         <TopHeader company={company} />
         <main className="w-full flex-1 px-4 py-6 sm:px-8">{children}</main>
-        <MobileBottomNav />
+        <MobileBottomNav role={company.role} />
       </div>
     </div>
   );

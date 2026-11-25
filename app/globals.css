@@ -221,6 +221,11 @@
   color: var(--foreground);
 }
 
+@keyframes material-qr-sweep {
+  from { top: 8%; }
+  to { top: 92%; }
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
