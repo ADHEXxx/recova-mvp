@@ -7,6 +7,7 @@ import { useCurrentCompany, useStore } from "@/lib/store";
 import { PageHeader } from "@/components/shared/page-header";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { SimulateQrButton } from "@/features/materials/simulate-qr-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MaterialCard } from "@/components/shared/material-card";
 import { RequirementCard } from "@/components/shared/requirement-card";
@@ -93,6 +94,7 @@ export function MarketplaceView() {
           <Link href={isGenerator ? "/materials" : "/requirements"}>{isGenerator ? "Mis materiales" : "Mis necesidades"}</Link>
         </Button>
       } />
+      {isGenerator && <SimulateQrButton />}
       <div className="flex items-center gap-2">{controls}</div>
 
       <div className="grid gap-6 lg:grid-cols-[240px_1fr]">

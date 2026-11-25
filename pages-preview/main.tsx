@@ -73,7 +73,9 @@ function AppRoute() {
   const query = useSearchParams();
   const Page = staticPages[pathname];
   if (Page) return <Page />;
-  if (pathname === "/materials/new") return <NewMaterialView requirementId={query.get("requirement") ?? undefined} />;
+  if (pathname === "/materials/new") {
+    return <NewMaterialView requirementId={query.get("requirement") ?? undefined} simulateQr={query.get("scan") === "qr"} />;
+  }
 
   const [, section, id, extra] = pathname.split("/");
   if (!id || extra) return <MissingPage />;

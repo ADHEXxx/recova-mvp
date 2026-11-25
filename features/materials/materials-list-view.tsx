@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Package } from "lucide-react";
 import { MaterialStatus } from "@/types";
 import { toast } from "sonner";
+import { SimulateQrButton } from "./simulate-qr-button";
 
 const TABS: { value: MaterialStatus; label: string }[] = [
   { value: "active", label: "Activos" },
@@ -56,6 +57,7 @@ export function MaterialsListView() {
           </Button>
         }
       />
+      {company.role === "GENERATOR" && <SimulateQrButton />}
 
       <Tabs value={tab} onValueChange={(v) => setTab(v as MaterialStatus)}>
         <TabsList className="w-full sm:w-auto">

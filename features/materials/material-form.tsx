@@ -13,7 +13,7 @@ import { CITIES, MATERIAL_CATEGORIES, MaterialCategory, MaterialType, MATERIAL_T
 import { classifyMaterial } from "@/lib/eva/classify";
 import { categoryForMaterialType } from "@/lib/material-category";
 import { useCurrentCompany, useStore, useStoreActions } from "@/lib/store";
-import { ClipboardCheck, Sparkles } from "lucide-react";
+import { ClipboardCheck, QrCode, Sparkles } from "lucide-react";
 import { Material } from "@/types";
 
 const CONDITIONS = ["Nuevo excedente", "Usado - buen estado", "Usado - reciclable", "Procesado"] as const;
@@ -21,7 +21,19 @@ const CLEANLINESS = ["Muy limpio", "Limpio", "Regular", "Con impurezas"] as cons
 const AVAILABILITY = ["Inmediata", "En 3-7 días", "En 1-2 semanas"] as const;
 const FREQUENCIES = ["Única vez", "Semanal", "Quincenal", "Mensual", "Continua"] as const;
 
-export function MaterialForm({ requirementId }: { requirementId?: string }) {
+const QR_SAMPLE = {
+  code: "REC-0248",
+  name: "Chatarra ferrosa · REC-0248",
+  description: "Contenedor REC-0248 con recortes de acero secos para recuperación.",
+  materialType: "Chatarra ferrosa",
+  quantity: "120",
+  condition: "Usado - reciclable",
+  cleanliness: "Limpio",
+  availability: "Inmediata",
+  frequency: "Única vez",
+} as const;
+
+export function MaterialForm({ requirementId, simulateQr }: { requirementId?: string; simulateQr?: boolean }) {
   const router = useRouter();
   const company = useCurrentCompany();
   const { state } = useStore();
@@ -29,18 +41,19 @@ export function MaterialForm({ requirementId }: { requirementId?: string }) {
   const linkedRequirement = requirementId ? state.requirements.find((requirement) => requirement.id === requirementId) : undefined;
   const didPrefill = useRef(false);
 
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState<MaterialCategory | "">("");
-  const [materialType, setMaterialType] = useState<MaterialType | "">("");
-  const [quantity, setQuantity] = useState("");
+  const sample = simulateQr && !requirementId && company?.role === "GENERATOR" ? QR_SAMPLE : undefined;
+  const [description, setDescription] = useState<string>(sample?.description ?? "");
+  const [name, setName] = useState<string>(sample?.name ?? "");
+  const [category, setCategory] = useState<MaterialCategory | "">(sample ? categoryForMaterialType(sample.materialType) : "");
+  const [materialType, setMaterialType] = useState<MaterialType | "">(sample?.materialType ?? "");
+  const [quantity, setQuantity] = useState<string>(sample?.quantity ?? "");
   const [unit, setUnit] = useState<Material["unit"]>("kg");
-  const [condition, setCondition] = useState<Material["condition"] | "">("");
-  const [cleanliness, setCleanliness] = useState<Material["cleanliness"] | "">("");
+  const [condition, setCondition] = useState<Material["condition"] | "">(sample?.condition ?? "");
+  const [cleanliness, setCleanliness] = useState<Material["cleanliness"] | "">(sample?.cleanliness ?? "");
   const [humidity, setHumidity] = useState("");
   const [city, setCity] = useState(company?.city ?? "");
-  const [availability, setAvailability] = useState<Material["availability"] | "">("");
-  const [frequency, setFrequency] = useState<Material["frequency"] | "">("");
+  const [availability, setAvailability] = useState<Material["availability"] | "">(sample?.availability ?? "");
+  const [frequency, setFrequency] = useState<Material["frequency"] | "">(sample?.frequency ?? "");
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
   const [acceptsGrouping, setAcceptsGrouping] = useState(true);
@@ -110,6 +123,15 @@ export function MaterialForm({ requirementId }: { requirementId?: string }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5 pb-6">
+      {sample && (
+        <div className="flex items-start gap-3 rounded-xl bg-secondary p-4" role="status">
+          <QrCode aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-primary" />
+          <div>
+            <p className="text-sm font-semibold">QR simulado · {sample.code}</p>
+            <p className="mt-1 text-sm text-muted-foreground">Revisá y editá los datos del lote antes de publicarlo.</p>
+          </div>
+        </div>
+      )}
       {linkedRequirement && (
         <div className="flex items-start gap-3 rounded-xl bg-secondary p-4">
           <ClipboardCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
