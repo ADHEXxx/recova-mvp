@@ -2,6 +2,10 @@
 
 Recova conecta a generadores de materiales secundarios con empresas que pueden aprovecharlos. El MVP usa datos de ejemplo de Santa Cruz, Bolivia.
 
+## Vista interactiva
+
+[Abrir Recova en el navegador](https://adhexxx.github.io/recova-mvp/). Esta versión muestra la selección de rol, la publicación, la agrupación de lotes por EVA y la confirmación con un caso simulado.
+
 ## Ejecutar en local
 
 Con Node.js y npm instalados, ejecutá:
